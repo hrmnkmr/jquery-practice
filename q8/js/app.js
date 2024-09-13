@@ -62,35 +62,36 @@ $(document).ready(function () {
   }
 
   // 検索結果の表示
-function displayResult(results) {
-  const $lists = $('.lists');
-  $lists.empty(); // 前の検索結果をクリア
-
-  // デバッグ出力で結果の内容を確認
-  console.log('検索結果:', results);
-
-  if (results && results.length > 0) {
-    results.forEach(item => {
-      const title = item.title || 'タイトル不明';
-      const author = item['dc:creator'] ? (Array.isArray(item['dc:creator']) ? item['dc:creator'].join(', ') : item['dc:creator']) : '著者不明';
-      const publisher = item['dc:publisher'] ? (Array.isArray(item['dc:publisher']) ? item['dc:publisher'][0] : item['dc:publisher']) : '出版社不明';
-      const pubDate = item['dc:date'] || '出版年不明';
-
-      // ボックス形式で書籍情報を追加
-      $lists.append(`
-        <li class="lists-item">
-          <strong>タイトル:</strong> ${title}<br>
-          <strong>著者:</strong> ${author}<br>
-          <strong>出版社:</strong> ${publisher}<br>
-          <strong>出版年:</strong> ${pubDate}
-        </li>
-      `);
-    });
-  } else {
-    $lists.append('<li class="lists-item">検索結果が見つかりませんでした。</li>');
+  function displayResult(results) {
+    const $lists = $('.lists');
+    $lists.empty(); // 前の検索結果をクリア
+  
+    // デバッグ出力で結果の内容を確認
+    console.log('検索結果:', results);
+  
+    if (results && results.length > 0) {
+      results.forEach(item => {
+        const title = item.title || 'タイトル不明';
+        
+        // 著者、出版社、出版年のデータがあるか確認し、不明の場合はデフォルト値を設定
+        const author = item['dc:creator'] ? (Array.isArray(item['dc:creator']) ? item['dc:creator'].join(', ') : item['dc:creator']) : '著者不明';
+        const publisher = item['dc:publisher'] ? (Array.isArray(item['dc:publisher']) ? item['dc:publisher'].join(', ') : item['dc:publisher']) : '出版社不明';
+        const pubDate = item['dc:date'] || '出版年不明';
+  
+        // ボックス形式で書籍情報を追加
+        $lists.append(`
+          <li class="lists-item">
+            <strong>タイトル:</strong> ${title}<br>
+            <strong>著者:</strong> ${author}<br>
+            <strong>出版社:</strong> ${publisher}<br>
+            <strong>出版年:</strong> ${pubDate}
+          </li>
+        `);
+      });
+    } else {
+      $lists.append('<li class="lists-item">検索結果が見つかりませんでした。</li>');
+    }
   }
-}
-
 
   // エラーメッセージの表示
   function displayError(err) {
