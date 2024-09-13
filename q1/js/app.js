@@ -61,13 +61,12 @@ $('#q6').on('click', function() {
 });
 
 // ボタンがクリックされたときの動作
-$('#q9').on('click', function() {
-  $("#q9 li").each(function(index) {
-    alert("Item " + (index + 2
-
-    ) + ": " + $(this).text());// ボタンを押した時に配列のアラート表示
-  });
+$('#q9 li').on('click', function() {
+  // クリックされたリスト項目のインデックスを取得して表示
+  const index = $(this).index();
+  alert("" + index);
 });
+
 
 // ボタンがクリックされたときの動作
 $('#q10 li').on('click', function() {
